@@ -2,8 +2,10 @@ PROJECT(MATLSD)
 
 FIND_PACKAGE(OpenCV REQUIRED)
 
-SET(OpenCV_INCLUDE_DIR1 $ENV{OpenCV_DIR}/include)
-SET(OpenCV_INCLUDE_DIR2 $ENV{OpenCV_DIR}/include/opencv)
+SET(OpenCV_DIR /usr/local)
+SET(OpenCV_INCLUDE_DIR1 ${OpenCV_DIR}/include)
+SET(OpenCV_INCLUDE_DIR2 ${OpenCV_DIR}/include/opencv4)
+SET(OpenCV_LIB_PATH /usr/local/lib)
 
 SET(MEX_NAME_SET
     lsd
@@ -38,7 +40,7 @@ IF(MEX_CMD AND MEXEXT_CMD)
             ADD_CUSTOM_COMMAND(
                 OUTPUT ${MEX_FILE}
                 COMMAND ${MEX_REAL_CMD}
-                ARGS ${MATLSD_SOURCE_DIR}/${MEX_NAME}.cpp -I${LSD_SOURCE_DIR}/include -I${OpenCV_INCLUDE_DIR1} -I${OpenCV_INCLUDE_DIR2} -L${LIBRARY_OUTPUT_PATH} -L${OpenCV_LIB_PATH} -llsd -lopencv_core247 -lopencv_highgui247 -lopencv_imgproc247
+                ARGS ${MATLSD_SOURCE_DIR}/${MEX_NAME}.cpp -I${LSD_SOURCE_DIR}/include -I${OpenCV_INCLUDE_DIR1} -I${OpenCV_INCLUDE_DIR2} -L${LIBRARY_OUTPUT_PATH} -L${OpenCV_LIB_PATH} -llsd -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
                 COMMENT "Building MEX extension ${MEX_FILE}"
             )
             ADD_CUSTOM_TARGET(mex_${MEX_NAME} ALL DEPENDS ${MEX_FILE})

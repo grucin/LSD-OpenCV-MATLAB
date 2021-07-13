@@ -44,15 +44,15 @@ To test LSD algorithm with OpenCV, run `./build/lsd_opencv_example.exe` after co
  *
  * Test the LSD algorithm with OpenCV
  */
-#include <highgui.h>
-#include <cv.h>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 #include <lsd.h>
 
 int main(int argc, char **argv)
 {
-    cv::Mat src = cv::imread("./../../images/test.jpg", CV_LOAD_IMAGE_COLOR);
+    cv::Mat src = cv::imread("./../../images/test.jpg", cv::IMREAD_COLOR);
     cv::Mat tmp, src_gray;
-    cv::cvtColor(src, tmp, CV_RGB2GRAY);
+    cv::cvtColor(src, tmp, cv::COLOR_RGB2GRAY);
     tmp.convertTo(src_gray, CV_64FC1);
 
     int cols  = src_gray.cols;
@@ -71,13 +71,13 @@ int main(int argc, char **argv)
         pt2.x = ntl->values[2 + j * ntl->dim];
         pt2.y = ntl->values[3 + j * ntl->dim];
         double width = ntl->values[4 + j * ntl->dim];
-        cv::line(lsd, pt1, pt2, cv::Scalar(255), width, CV_AA);
+        cv::line(lsd, pt1, pt2, cv::Scalar(255), width, cv::LINE_AA);
     }
     free_ntuple_list(ntl);
 
-    cv::namedWindow("src", CV_WINDOW_AUTOSIZE);
+    cv::namedWindow("src", cv::WINDOW_AUTOSIZE);
     cv::imshow("src", src);
-    cv::namedWindow("lsd", CV_WINDOW_AUTOSIZE);
+    cv::namedWindow("lsd", cv::WINDOW_AUTOSIZE);
     cv::imshow("lsd", lsd);
     cv::waitKey(0);
     cv::destroyAllWindows();

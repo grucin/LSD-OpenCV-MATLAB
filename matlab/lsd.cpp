@@ -1,15 +1,16 @@
 #include <mex.h>
 #include <lsd.h>
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 #include <vector>
 #include <string>
-#include <highgui.h>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui/highgui.hpp>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     std::string picture = mxArrayToString(prhs[0]);
-    cv::Mat src = cv::imread(picture.c_str(), CV_LOAD_IMAGE_COLOR);
+    cv::Mat src = cv::imread(picture.c_str(), cv::IMREAD_COLOR);
     cv::Mat tmp, src_gray;
-    cv::cvtColor(src, tmp, CV_RGB2GRAY);
+    cv::cvtColor(src, tmp, cv::COLOR_RGB2GRAY);
     tmp.convertTo(src_gray, CV_64FC1);
 
     image_double image = new_image_double(src_gray.cols, src_gray.rows);
